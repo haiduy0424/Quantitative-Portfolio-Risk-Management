@@ -2,26 +2,22 @@
 
 A Python framework for building and risk-managing two USD 50m equity funds benchmarked to the Dow Jones Industrial Average (DJIA).
 
-| Fund | Objective | Approach |
-|---|---|---|
-| **Active** | Outperform the DJIA on a risk-adjusted basis | Black–Litterman expected returns → constrained max-Sharpe portfolio of 12 stocks |
-| **Passive** | Track the DJIA | Full price-weighted replication with index-futures overlays |
-
-**Evaluation period:** 1 Oct 2024 – 20 Nov 2025  **Initial capital:** USD 50m per fund
+- **Active fund:** aims to outperform the DJIA on a risk-adjusted basis. It uses Black–Litterman expected returns and builds a constrained, maximum-Sharpe portfolio of 12 stocks.
+- **Passive fund:** aims to track the DJIA closely. It fully replicates the price-weighted index and adds index-futures overlays.
+- **Evaluation period:** 1 Oct 2024 – 20 Nov 2025
+- **Initial capital:** USD 50m per fund
 
 ## 1. Methodology
 
-| Stage | Method |
-|---|---|
-| **Risk model** | Covariance shrinkage with a cross-validated intensity; compared against sample, constant-correlation and EWMA estimators |
-| **Expected returns** | Black–Litterman: market-implied equilibrium prior + absolute views from sell-side target prices |
-| **Optimisation** | Maximum Sharpe ratio under a 10% single-stock cap, sector bands, long-only, fully invested |
-| **Rebalancing** | Drift-based rule with a ±5% tolerance band around target weights |
-| **Factor analysis** | Fama–French 3-factor regression (Mkt-RF, SMB, HML) as a style and risk diagnostic |
-| **Market risk** | Monte Carlo simulation (10,000 paths) → 95% / 99% Value-at-Risk |
-| **Stress testing** | Portfolio replayed across bullish, bearish and stable historical regimes |
-| **Passive fund** | Price-weighted replication including the Nov-2024 index change (INTC, DOW → NVDA, SHW) |
-| **Derivatives** | DJIA futures for cash equitization and beta hedging |
+- **Risk model:** covariance shrinkage with the intensity chosen by cross-validation. It is benchmarked against the sample, constant-correlation and EWMA estimators.
+- **Expected returns:** a Black–Litterman model combining the market-implied equilibrium prior with absolute views derived from sell-side target prices.
+- **Optimisation:** maximum Sharpe ratio, subject to a 10% single-stock cap, sector bands, and a long-only, fully invested constraint.
+- **Rebalancing:** drift-based, triggered when any weight moves more than ±5% from its target.
+- **Factor analysis:** Fama–French 3-factor regression (Mkt-RF, SMB, HML), used as a style and risk diagnostic.
+- **Market risk:** 95% and 99% Value-at-Risk from a Monte Carlo simulation with 10,000 paths.
+- **Stress testing:** the portfolio is replayed across bullish, bearish and stable historical regimes.
+- **Passive replication:** price-weighted, including the Nov-2024 index change (INTC and DOW replaced by NVDA and SHW).
+- **Derivatives overlay:** DJIA futures used for cash equitization and beta hedging.
 
 ## 2. Results
 
@@ -36,10 +32,10 @@ A Python framework for building and risk-managing two USD 50m equity funds bench
 | Maximum drawdown | -20.59% | -18.76% | -16.37% |
 
 - **Value-at-Risk (1-year, Monte Carlo):**
-  - 95%: a USD 40.4m ending value, i.e. a loss of about USD 9.6m (19%)
-  - 99%: a USD 38.2m ending value, i.e. a loss of about USD 11.8m (24%)
+  - 95%: ending value of USD 40.4m, a loss of about USD 9.6m (19%)
+  - 99%: ending value of USD 38.2m, a loss of about USD 11.8m (24%)
 - **Scenario analysis (2-year total return):** Bullish +41.45%, Bearish -50.61%, Stable +45.58%
-- **Factor exposure:** market risk is the dominant driver, size exposure is limited (large-cap universe), and value exposure is modest.
+- **Factor exposure:** market risk is the dominant driver. Size exposure is limited because the universe is large-cap, and value exposure is modest.
 
 ### Passive fund
 
@@ -59,39 +55,26 @@ A Python framework for building and risk-managing two USD 50m equity funds bench
 | **Cash equitization** | 6 long DJIA futures deploy the 5% cash buffer, removing cash drag and bringing tracking error close to zero |
 | **Beta hedge** | A short futures overlay cuts volatility from 16.21% to 1.47% (return 10.44% → 0.85%), neutralising market exposure |
 
-## 3. Repository structure
+## 3. Skills Demonstrated
 
-```text
-├── Code.ipynb                                           # Research notebook: data → construction → risk → results
-├── utils.py                                             # Model, backtest, risk and charting functions
-├── target_prices_djia.xlsx                              # Analyst 12-month target prices
-├── F-F_Research_Data_Factors_daily.xlsx                 # Fama–French daily factors
-└── ETF Portfolio Performance_Report_Quant Approach.pdf  # Full written report
-```
+- **Quantitative portfolio construction:** mean–variance optimisation under realistic constraints, Black–Litterman return estimation, and drift-based rebalancing.
+- **Risk modelling:** shrinkage covariance estimation, Monte Carlo VaR, scenario stress testing, drawdown analysis and rolling beta.
+- **Factor and performance attribution:** Fama–French style analysis, and benchmark-relative metrics such as Sharpe, tracking error and maximum drawdown.
+- **Derivatives for portfolio management:** sizing index futures for cash equitization and market-neutral hedging.
+- **Index replication:** price-weighted tracking of the DJIA, including handling index membership changes.
+- **Python for finance:** end-to-end pipelines in pandas, NumPy, SciPy and scikit-learn; market data from yfinance; visual reporting in matplotlib.
 
-## 4. Getting started
+## 4. Key Takeaways
 
-```bash
-git clone <repository-url>
-cd Portfolio-Risk-Analytics-Framework
-pip install numpy pandas scipy scikit-learn matplotlib openpyxl jinja2 yfinance
-jupyter notebook Code.ipynb
-```
+- **Active management added value** within a disciplined framework, with a Sharpe ratio of 1.60 against 0.67 for the DJIA.
+- **Black–Litterman** gives a structured way to combine market equilibrium with fundamental views.
+- **Constraints and shrinkage** turn a mathematical optimisation into an implementable, diversified allocation.
+- **Downside risk varies sharply across market regimes**, so a single VaR figure understates tail exposure.
+- **Index futures serve two roles:** keeping full benchmark exposure (equitization) or neutralising it (hedging).
 
-Run all cells in order. Market data is downloaded from Yahoo Finance.
-All parameters (dates, capital, constraints, model settings) live in `ResearchConfig` in `utils.py`.
+## 5. Limitations
 
-## 5. Key takeaways
-
-- **Active management** added value within a disciplined framework: a Sharpe ratio of 1.60 vs 0.67 for the DJIA.
-- **Black–Litterman** combines market equilibrium with fundamental views in a structured way.
-- **Constraints and shrinkage** turn mathematical optimisation into implementable, diversified allocations.
-- **Downside risk** varies sharply across market regimes, so a single VaR figure understates tail exposure.
-- **Index futures** serve two roles: keeping full benchmark exposure (equitization) or neutralising it (hedging).
-
-## 6. Limitations
-
-- Results depend on the Black–Litterman prior and on analyst views.
+- Results depend on the Black–Litterman prior and on the analyst views.
 - Correlations are unstable across market regimes.
 - The model makes simplified distributional assumptions.
 - Futures basis risk and roll costs are not fully modelled.
