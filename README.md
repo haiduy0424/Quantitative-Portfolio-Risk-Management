@@ -1,4 +1,4 @@
-# Portfolio Risk Analytics Framework
+# Active & Passive DJIA Fund Management: Black–Litterman Optimisation, Risk Modelling and Futures Overlays
 
 A Python framework for building and risk-managing two USD 50m equity funds benchmarked to the Dow Jones Industrial Average (DJIA).
 
