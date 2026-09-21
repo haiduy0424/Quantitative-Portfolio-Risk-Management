@@ -9,9 +9,7 @@ A Python framework for building and risk-managing two USD 50m equity funds bench
 
 **Evaluation period:** 1 Oct 2024 – 20 Nov 2025  **Initial capital:** USD 50m per fund
 
----
-
-## Methodology
+## 1. Methodology
 
 | Stage | Method |
 |---|---|
@@ -25,9 +23,7 @@ A Python framework for building and risk-managing two USD 50m equity funds bench
 | **Passive fund** | Price-weighted replication including the Nov-2024 index change (INTC, DOW → NVDA, SHW) |
 | **Derivatives** | DJIA futures for cash equitization and beta hedging |
 
----
-
-## Results
+## 2. Results
 
 ### Active fund vs benchmarks
 
@@ -63,9 +59,7 @@ A Python framework for building and risk-managing two USD 50m equity funds bench
 | **Cash equitization** | 6 long DJIA futures deploy the 5% cash buffer, removing cash drag and bringing tracking error close to zero |
 | **Beta hedge** | A short futures overlay cuts volatility from 16.21% to 1.47% (return 10.44% → 0.85%), neutralising market exposure |
 
----
-
-## Repository structure
+## 3. Repository structure
 
 ```text
 ├── Code.ipynb                                           # Research notebook: data → construction → risk → results
@@ -75,9 +69,7 @@ A Python framework for building and risk-managing two USD 50m equity funds bench
 └── ETF Portfolio Performance_Report_Quant Approach.pdf  # Full written report
 ```
 
----
-
-## Getting started
+## 4. Getting started
 
 ```bash
 git clone <repository-url>
@@ -89,9 +81,7 @@ jupyter notebook Code.ipynb
 Run all cells in order. Market data is downloaded from Yahoo Finance.
 All parameters (dates, capital, constraints, model settings) live in `ResearchConfig` in `utils.py`.
 
----
-
-## Key takeaways
+## 5. Key takeaways
 
 - **Active management** added value within a disciplined framework: a Sharpe ratio of 1.60 vs 0.67 for the DJIA.
 - **Black–Litterman** combines market equilibrium with fundamental views in a structured way.
@@ -99,14 +89,12 @@ All parameters (dates, capital, constraints, model settings) live in `ResearchCo
 - **Downside risk** varies sharply across market regimes, so a single VaR figure understates tail exposure.
 - **Index futures** serve two roles: keeping full benchmark exposure (equitization) or neutralising it (hedging).
 
-## Limitations
+## 6. Limitations
 
 - Results depend on the Black–Litterman prior and on analyst views.
 - Correlations are unstable across market regimes.
 - The model makes simplified distributional assumptions.
 - Futures basis risk and roll costs are not fully modelled.
-
----
 
 ## Disclaimer
 
