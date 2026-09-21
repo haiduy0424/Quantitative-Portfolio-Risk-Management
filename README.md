@@ -57,12 +57,12 @@ A Python framework for building and risk-managing two USD 50m equity funds bench
 
 ## 3. Skills Demonstrated
 
-- **Quantitative portfolio construction:** mean–variance optimisation under realistic constraints, Black–Litterman return estimation, and drift-based rebalancing.
-- **Risk modelling:** shrinkage covariance estimation, Monte Carlo VaR, scenario stress testing, drawdown analysis and rolling beta.
-- **Factor and performance attribution:** Fama–French style analysis, and benchmark-relative metrics such as Sharpe, tracking error and maximum drawdown.
-- **Derivatives for portfolio management:** sizing index futures for cash equitization and market-neutral hedging.
-- **Index replication:** price-weighted tracking of the DJIA, including handling index membership changes.
-- **Python for finance:** end-to-end pipelines in pandas, NumPy, SciPy and scikit-learn; market data from yfinance; visual reporting in matplotlib.
+- **Portfolio construction:** Bayesian return estimation (Black–Litterman), constrained mean–variance optimisation, drift-band rebalancing.
+- **Risk modelling:** shrinkage covariance, Monte Carlo VaR, regime-based stress testing, drawdown and rolling-beta analysis.
+- **Performance attribution:** Fama–French factor decomposition, Sharpe, tracking error, Jensen's alpha.
+- **Derivatives overlay:** index-futures sizing for cash equitization and beta hedging.
+- **Index replication:** price-weighted DJIA tracking through constituent changes.
+- **Quant research stack:** end-to-end Python pipeline (pandas, NumPy, SciPy, scikit-learn, yfinance, matplotlib).
 
 ## 4. Key Takeaways
 
