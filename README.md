@@ -1,6 +1,6 @@
 # Active & Passive DJIA Fund Management: Black–Litterman Optimisation, Risk Modelling and Futures Overlays
 
-This is a quantitative portfolio and risk management study of two simulated USD 50m equity funds benchmarked to the Dow Jones Industrial Average (DJIA). The analysis runs as one Python pipeline, from covariance estimation and Bayesian return forecasting through constrained optimisation, tail-risk simulation and futures overlays.
+A quantitative portfolio and risk management study of two simulated USD 50m DJIA-benchmarked equity funds, built as a Python pipeline covering covariance estimation, Bayesian return forecasting, constrained optimisation, tail-risk simulation and futures overlays.
 
 - **Active fund:** a constrained max-Sharpe portfolio of 12 DJIA stocks, built on Black–Litterman expected returns and aiming to beat the index on a risk-adjusted basis.
 - **Passive fund:** a price-weighted full replication of the DJIA, with index-futures overlays for cash equitization and beta hedging.
@@ -10,7 +10,7 @@ This is a quantitative portfolio and risk management study of two simulated USD 
 
 **Active fund**
 - **Risk model:** Ledoit–Wolf shrinkage covariance ⟶ The shrinkage intensity is chosen by cross-validated out-of-sample likelihood.
-- **Expected returns:** Black–Litterman, which updates a market-implied equilibrium prior with absolute views derived from sell-side target prices.
+- **Expected returns:** Black–Litterman model, which updates a market-implied equilibrium prior with absolute views derived from sell-side target prices.
 - **Optimisation:** maximum Sharpe ratio, subject to top-down sector allocations, a 10% cap on any single stock, and long-only, fully invested weights.
 - **Rebalancing:** drift-based, triggered when any weight moves more than ±5% from its target.
 - **Risk analytics:** Fama–French 3-factor attribution, Monte Carlo VaR at 95% and 99% (10,000 simulations), and stress tests across bullish, bearish and stable regimes.
