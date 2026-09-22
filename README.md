@@ -29,7 +29,7 @@ A quantitative portfolio and risk management study of two simulated USD 50m DJIA
 | Annualised return (CAGR) | **36.45%** | 15.72% | 8.31% |
 | Annualised volatility | 20.86% | 18.86% | 16.45% |
 | Sharpe ratio | **1.60** | 0.67 | 0.32 |
-| Maximum drawdown | -20.59% | -18.76% | -16.37% |
+| Maximum drawdown | (20.59%) | (18.76%) | (16.37%) |
 
 - **Value-at-Risk (1-year, Monte Carlo):**
   - 95%: ending value of USD 40.4m, a loss of about USD 9.6m (19%)
@@ -46,7 +46,7 @@ A quantitative portfolio and risk management study of two simulated USD 50m DJIA
 | Annualised volatility | 16.45% |
 | Sharpe ratio | 0.43 |
 | Tracking error vs DJIA | **0.22%** (target < 5%) |
-| Maximum drawdown | -15.55% (DJIA: -16.37%) |
+| Maximum drawdown | (15.55%) (DJIA: (16.37%)) |
 
 ### Futures overlays
 
