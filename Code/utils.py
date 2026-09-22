@@ -3,7 +3,6 @@
 import random
 import warnings
 from datetime import datetime, timedelta
-
 import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
 import numpy as np
@@ -328,9 +327,6 @@ class VcvEstimation:
         X_test : array-like
             Test dataset used in validation.
         """
-        import matplotlib.pyplot as plt
-        import numpy as np
-
         plt.style.use("seaborn-v0_8-whitegrid")
 
         fig, ax = plt.subplots(figsize=(11, 7))
@@ -522,7 +518,6 @@ class BlackLitterman:
         plt.tight_layout()
         plt.show()
 
-
 plt.rcParams["font.family"] = "sans-serif"
 
 
@@ -541,7 +536,6 @@ class StyleAnalytics:
     def _load_and_process_factors(self):
         try:
             print(f"📂 Reading factors: {self.factor_filepath}")
-            # Intelligent header detection
             df_temp = pd.read_excel(self.factor_filepath, header=None, engine="openpyxl")
             header_row_idx = None
             for idx, row in df_temp.iterrows():
@@ -931,11 +925,6 @@ class AlgorithmicTrading:
         return trade_evaluation_df
 
     def underlying_returns(self, signals_df, figsize=(14, 8)):
-        import matplotlib.pyplot as plt
-        import numpy as np
-        import pandas as pd
-        import seaborn as sns
-
         underlying = pd.DataFrame()
         underlying["Returns"] = signals_df["Returns"].fillna(0)
         underlying["Portfolio Cumulative Returns"] = signals_df[
@@ -1045,11 +1034,6 @@ class AlgorithmicTrading:
         return underlying[["Underlying Cumulative Returns", "Algo Cumulative Returns"]]
 
     def plot_cumulative_returns(self, signals_df, figsize=(16, 8), style="whitegrid"):
-        import matplotlib.dates as mdates
-        import matplotlib.pyplot as plt
-        import pandas as pd
-        import seaborn as sns
-
         sns.set_style(style)
         sns.set_context("talk")
 
@@ -1215,12 +1199,8 @@ class TranscendentalKernel:
         plt.title("VaR of Ending Portfolio Value", fontsize=16, fontweight="bold")
         plt.xlabel("Portfolio Value", fontsize=14)
         plt.ylabel("Density", fontsize=14)
-
-        # Customizing the grid
         plt.grid(True, linestyle="--", alpha=0.5)
-
         plt.tight_layout()
-
         plt.legend(loc="best", fontsize=12, title="Value at Risk", title_fontsize=14)
         plt.show()
 
@@ -1475,22 +1455,18 @@ def advanced_drift_backtest(
 
     for date in dates[1:]:
         current_prices = prices.loc[date]
-
         holdings_value = (shares * current_prices).sum()
         total_value = cash + holdings_value
-
         if total_value == 0:
             current_weights = pd.Series(0, index=valid_tickers)
         else:
             current_weights = (shares * current_prices) / total_value
-
         drift = (current_weights - target_weights).abs()
         max_drift = drift.max()
-
         needs_rebalance = False
         if max_drift > threshold:
             needs_rebalance = True
-
+            
         daily_cost = 0.0
 
         if needs_rebalance:
@@ -1543,7 +1519,6 @@ def advanced_drift_backtest(
         sharpe = sharpe_ratio(rets, riskfree_rate=0.03, periods_per_year=252)
         mdd = drawdown(rets)["Drawdown"].min()
     except Exception:
-        # Manual fallback calculation
         days = (history_df.index[-1] - history_df.index[0]).days
         total_ret = (history_df["TotalValue"].iloc[-1] / initial_capital) - 1
         ann_ret = (1 + total_ret) ** (365.25 / days) - 1 if days > 0 else 0
@@ -1639,7 +1614,6 @@ def analyze_portfolio_vs_benchmark_specific_period(weights_dict, start_date, end
         display_metrics[col] = display_metrics[col].apply(lambda x: f"{x:.2%}")
     display_metrics["Sharpe Ratio"] = display_metrics["Sharpe Ratio"].apply(lambda x: f"{x:.2f}")
 
-    # Visualization
     plt.figure(figsize=(12, 6))
 
     # Cumulative Returns (Growth of $100)
@@ -1677,7 +1651,6 @@ def analyze_portfolio_vs_benchmark_specific_period(weights_dict, start_date, end
     plt.legend()
     plt.grid(True, linestyle=":", alpha=0.6)
 
-    # Add a text box with the Total Return Summary
     port_tot = metrics_df.loc["Portfolio", "Total Return"]
     djia_tot = metrics_df.loc["DJIA", "Total Return"]
     spy_tot = metrics_df.loc["SPY", "Total Return"]
@@ -1855,11 +1828,7 @@ def get_caps(tickers_dict, start_date="2018-10-01", end_date="2024-10-01"):
             print(f"  → Fetching market cap for {t} ...")
             try:
                 stock = yf.Ticker(t)
-
-                # Get adjusted historical close prices
                 data = stock.history(start=start_date, end=end_date, auto_adjust=True)
-
-                # Get number of outstanding shares
                 shares = stock.info.get("sharesOutstanding", None)
 
                 if shares is None:
@@ -2021,7 +1990,7 @@ def minimize_vol(target_return, er, cov):
     """
     n = er.shape[0]
     init_guess = np.repeat(1 / n, n)
-    bounds = ((0.0, 1.0),) * n  # an N-tuple of 2-tuples!
+    bounds = ((0.0, 1.0),) * n 
     # construct the constraints
     weights_sum_to_1 = {"type": "eq", "fun": lambda weights: np.sum(weights) - 1}
     return_is_target = {
@@ -2096,24 +2065,12 @@ def shrinkage_cov(r, delta=0.5, **kwargs):
 
 
 def annualize_rets(r, periods_per_year):
-    """
-    Annualizes a set of returns
-    We should infer the periods per year
-    but that is currently left as an exercise
-    to the reader :-)
-    """
     compounded_growth = (1 + r).prod()
     n_periods = r.shape[0]
     return compounded_growth ** (periods_per_year / n_periods) - 1
 
 
 def annualize_vol(r, periods_per_year):
-    """
-    Annualizes the vol of a set of returns
-    We should infer the periods per year
-    but that is currently left as an exercise
-    to the reader :-)
-    """
     return r.std() * (periods_per_year**0.5)
 
 
@@ -2219,7 +2176,7 @@ def summary_stats(r, riskfree_rate=0.03):
         }
     )
 
-# PASSIVE FUND ANALYSIS ==============================================================================
+# PASSIVE FUND ANALYSIS ======================================================================================================
 
 sns.set_style("whitegrid")
 plt.rcParams["figure.figsize"] = (14, 7)
@@ -2479,7 +2436,7 @@ def hedged_long_futures_nav_and_metrics(
     periods_per_year=252,
 ):
     """
-    Passive fund after CASH EQUITIZATION using LONG futures on DJIA:
+    Passive fund after cash equitization using long futures on DJIA:
     - (1 - cash_weight) invested in your stock portfolio (fund_object.portfolio_value)
     - cash_weight held as cash BUT equitized via LONG DJIA futures => earns benchmark return
     So total hedged return each day:
@@ -2489,7 +2446,6 @@ def hedged_long_futures_nav_and_metrics(
         nav_hedged (Series), metrics (dict), drawdown_series (Series)
     """
 
-    # --- Safety checks ---
     if fund_object.portfolio_value is None or len(fund_object.portfolio_value) == 0:
         raise ValueError(
             "fund_object.portfolio_value is empty. Run fund_object.track_performance() first."
@@ -2510,11 +2466,10 @@ def hedged_long_futures_nav_and_metrics(
     r_port = r_port.loc[common]
     r_bench = r_bench.loc[common]
 
-    # --- Hedged returns with LONG futures (cash equitization) ---
+    # --- Hedged returns with long futures (cash equitization) ---
     w = float(cash_weight)
     r_hedged = (1 - w) * r_port + w * r_bench
 
-    # Build NAV series starting from initial capital
     initial_nav = float(getattr(fund_object, "initial_capital", nav_port.loc[common[0]]))
     nav_hedged = initial_nav * (1 + r_hedged).cumprod()
     nav_hedged.name = "NAV_Hedged_LongFut"
@@ -2524,7 +2479,7 @@ def hedged_long_futures_nav_and_metrics(
 
     vol = r_hedged.std() * np.sqrt(periods_per_year)
 
-    # Sharpe (annualized, with annual rf)
+    # Sharpe 
     rf_per_period = (1 + rf_annual) ** (1 / periods_per_year) - 1
     excess = r_hedged - rf_per_period
     sharpe = (excess.mean() * periods_per_year) / vol if vol != 0 else np.nan
@@ -2619,7 +2574,6 @@ class AdvancedPassiveManager(PassiveFundManager):
 
     def calculate_attribution(self):
         """Compute simplified performance attribution (top contributors)."""
-        # Total return per stock across the full period
         stock_returns = (self.stock_data.iloc[-1] - self.stock_data.iloc[0]) / self.stock_data.iloc[
             0
         ]
@@ -2647,7 +2601,7 @@ class AdvancedPassiveManager(PassiveFundManager):
         current_beta = rolling_beta.iloc[-1]
 
         futures_multiplier = 10
-        index_level = self.benchmark_data.iloc[-1]  # e.g., 44,000
+        index_level = self.benchmark_data.iloc[-1]  
         contract_value = index_level * futures_multiplier
 
         portfolio_value = self.portfolio_value.iloc[-1]
@@ -2670,23 +2624,16 @@ class AdvancedPassiveManager(PassiveFundManager):
         return rolling_beta
 
     def generate_dashboard(self):
-        """Render a professional summary dashboard (Text Report + Visual Charts)."""
-        import matplotlib.pyplot as plt
-        import numpy as np
-        import pandas as pd
-        import seaborn as sns
-
-        # Ensure data exists
         if self.portfolio_value.empty:
             self.track_performance()
 
-        # 1. Performance Metrics (End of Period)
+        # 1. Performance metric
         end_value = self.portfolio_value.iloc[-1]
         total_ret = (end_value / self.initial_capital) - 1
         volatility = self.portfolio_value.pct_change().std() * np.sqrt(252)
         sharpe = (total_ret - 0.03) / volatility
 
-        # 2. Hedge Metrics (At Inception / Start Date)
+        # 2. Hedge metric
         target_date = pd.to_datetime(self.start_date)
         try:
             loc = self.benchmark_data.index.get_indexer([target_date], method="bfill")[0]
@@ -2704,7 +2651,6 @@ class AdvancedPassiveManager(PassiveFundManager):
         contract_value_start = index_at_start * 5
         contracts_needed = equity_exposure_start / contract_value_start
 
-        # Print Text
         print("=" * 80)
         print(" 📊 FUND PERFORMANCE & RISK REPORT")
         print("=" * 80)
@@ -2724,7 +2670,7 @@ class AdvancedPassiveManager(PassiveFundManager):
         print("=" * 80)
         print("\nDisplaying Visual Dashboard...")
 
-        # Prepare Data using Helper Methods
+        # Prepare data using helper methods
         sector_w = self.analyze_sector_allocation()
         contrib = self.calculate_attribution()
         rolling_beta = self.derivatives_overlay_analysis()
@@ -2773,7 +2719,7 @@ class AdvancedPassiveManager(PassiveFundManager):
         plt.tight_layout()
         plt.show()
 
-# HEDGING STRATEGY AUDIT & EXPLANATION MODULE ==============================================================================
+# HEDGING STRATEGY & EXPLANATION ANALYSIS ==============================================================================
 
 
 def explain_hedging_logic(fund_object):
@@ -2783,12 +2729,6 @@ def explain_hedging_logic(fund_object):
     - Cash Reserve (5%): $2.5M (Reserved for Long Futures exposure)
     - Equity to Hedge (95%): $47.5M
     """
-    import numpy as np
-    import pandas as pd
-
-    print("\n" + "=" * 60)
-    print(" 🛡️  HEDGING STRATEGY EXPLANATION (SHORT FUTURES HEDGE)")
-    print("=" * 60)
 
     if fund_object.benchmark_data is None or fund_object.benchmark_data.empty:
         print("❌ Error: Benchmark data is missing.")
@@ -2860,14 +2800,6 @@ def simulate_hedged_performance(fund_object):
     - 5% Capital ($2.5M) held as Cash (Collateral).
     - Short Futures Hedge established at START DATE to fully hedge the 95% Equity.
     """
-    import matplotlib.pyplot as plt
-    import numpy as np
-    import pandas as pd
-
-    print("\n" + "=" * 60)
-    print(" 📉 SIMULATING HEDGED PERFORMANCE (MARKET NEUTRAL)")
-    print("=" * 60)
-
     total_capital = 50_000_000
     equity_alloc = 0.95
     cash_alloc = 0.05
@@ -2929,7 +2861,9 @@ def simulate_hedged_performance(fund_object):
 
     return hedged_portfolio_value
 
+
 # CASH EQUITIZATION ANALYSIS ==========================================================================================
+
 
 class CashEquitizationManager:
     def __init__(self, fund_object, initial_nav=50_000_000):
@@ -3032,6 +2966,7 @@ class CashEquitizationManager:
 
 
 # VISUALIZATION: SECTOR ALLOCATION & DRAWDOWN ==============================================================================
+
 
 class FundVisualizer:
     def __init__(self, fund_object):
