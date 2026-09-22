@@ -21,7 +21,7 @@ A quantitative portfolio and risk management study of two simulated USD 50m DJIA
 
 ## 2. Results
 
-### Active fund vs benchmarks
+### 2.1. Active fund vs benchmarks
 
 | Metric | Active fund | DJIA | S&P 500 (SPY) |
 |---|---:|---:|---:|
@@ -37,7 +37,7 @@ A quantitative portfolio and risk management study of two simulated USD 50m DJIA
 - **Scenario analysis (2-year total return):** Bullish +41.45%, Bearish -50.61%, Stable +45.58%
 - **Factor exposure:** market risk is the dominant driver. Size exposure is limited because the universe is large-cap, and value exposure is modest.
 
-### Passive fund
+### 2.2. Passive fund
 
 | Metric | Result |
 |---|---:|
@@ -48,7 +48,7 @@ A quantitative portfolio and risk management study of two simulated USD 50m DJIA
 | Tracking error vs DJIA | **0.22%** (target < 5%) |
 | Maximum drawdown | (15.55%) (DJIA: (16.37%)) |
 
-### Futures overlays
+### 2.3. Futures overlays
 
 | Strategy | Effect |
 |---|---|
