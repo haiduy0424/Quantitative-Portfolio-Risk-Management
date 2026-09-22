@@ -1,23 +1,23 @@
 # Active & Passive DJIA Fund Management: Black–Litterman Optimisation, Risk Modelling and Futures Overlays
 
-A Python framework for building and risk-managing two USD 50m equity funds benchmarked to the Dow Jones Industrial Average (DJIA).
+This is a quantitative portfolio and risk management study of two simulated USD 50m equity funds benchmarked to the Dow Jones Industrial Average (DJIA). The analysis runs as one Python pipeline, from covariance estimation and Bayesian return forecasting through constrained optimisation, tail-risk simulation and futures overlays.
 
-- **Active fund:** aims to outperform the DJIA on a risk-adjusted basis. It uses Black–Litterman expected returns and builds a constrained, maximum-Sharpe portfolio of 12 stocks.
-- **Passive fund:** aims to track the DJIA closely. It fully replicates the price-weighted index and adds index-futures overlays.
-- **Evaluation period:** 1 Oct 2024 – 20 Nov 2025
-- **Initial capital:** USD 50m per fund
+- **Active fund:** a constrained max-Sharpe portfolio of 12 DJIA stocks, built on Black–Litterman expected returns and aiming to beat the index on a risk-adjusted basis.
+- **Passive fund:** a price-weighted full replication of the DJIA, with index-futures overlays for cash equitization and beta hedging.
+- **Evaluation period:** 1 Oct 2024 – 20 Nov 2025 · **Initial capital:** USD 50m per fund
 
 ## 1. Methodology
 
-- **Risk model:** covariance shrinkage with the intensity chosen by cross-validation. It is benchmarked against the sample, constant-correlation and EWMA estimators.
-- **Expected returns:** a Black–Litterman model combining the market-implied equilibrium prior with absolute views derived from sell-side target prices.
-- **Optimisation:** maximum Sharpe ratio, subject to a 10% single-stock cap, sector bands, and a long-only, fully invested constraint.
+**Active fund**
+- **Risk model:** Ledoit–Wolf shrinkage covariance ⟶ The shrinkage intensity is chosen by cross-validated out-of-sample likelihood.
+- **Expected returns:** Black–Litterman, which updates a market-implied equilibrium prior with absolute views derived from sell-side target prices.
+- **Optimisation:** maximum Sharpe ratio, subject to top-down sector allocations, a 10% cap on any single stock, and long-only, fully invested weights.
 - **Rebalancing:** drift-based, triggered when any weight moves more than ±5% from its target.
-- **Factor analysis:** Fama–French 3-factor regression (Mkt-RF, SMB, HML), used as a style and risk diagnostic.
-- **Market risk:** 95% and 99% Value-at-Risk from a Monte Carlo simulation with 10,000 paths.
-- **Stress testing:** the portfolio is replayed across bullish, bearish and stable historical regimes.
-- **Passive replication:** price-weighted, including the Nov-2024 index change (INTC and DOW replaced by NVDA and SHW).
-- **Derivatives overlay:** DJIA futures used for cash equitization and beta hedging.
+- **Risk analytics:** Fama–French 3-factor attribution, Monte Carlo VaR at 95% and 99% (10,000 simulations), and stress tests across bullish, bearish and stable regimes.
+
+**Passive fund**
+- **Replication:** price-weighted, including the Nov-2024 index change (INTC and DOW replaced by NVDA and SHW). 5% of NAV is held in cash to represent execution frictions.
+- **Futures overlays:** long DJIA futures for cash equitization and short DJIA futures for beta hedging ⟶ Contracts are sized as *cash ÷ (index level × multiplier)*.
 
 ## 2. Results
 
@@ -57,28 +57,26 @@ A Python framework for building and risk-managing two USD 50m equity funds bench
 
 ## 3. Skills Demonstrated
 
-- **Portfolio construction:** Bayesian return estimation (Black–Litterman), constrained mean–variance optimisation, drift-band rebalancing.
-- **Risk modelling:** shrinkage covariance, Monte Carlo VaR, regime-based stress testing, drawdown and rolling-beta analysis.
-- **Performance attribution:** Fama–French factor decomposition, Sharpe, tracking error, Jensen's alpha.
-- **Derivatives overlay:** index-futures sizing for cash equitization and beta hedging.
-- **Index replication:** price-weighted DJIA tracking through constituent changes.
-- **Quant research stack:** end-to-end Python pipeline (pandas, NumPy, SciPy, scikit-learn, yfinance, matplotlib).
+- **Portfolio construction:** Black–Litterman return estimation, constrained mean–variance optimisation, drift-band rebalancing.
+- **Risk modelling:** shrinkage covariance estimation, Monte Carlo VaR, regime-based stress testing.
+- **Attribution:** Fama–French factor regression, Sharpe ratio, tracking error, Jensen's alpha.
+- **Index replication and derivatives:** price-weighted index tracking, futures hedge-ratio sizing.
+- **Tooling:** Python (pandas, NumPy, SciPy, statsmodels, PyPortfolioOpt, yfinance).
 
 ## 4. Key Takeaways
 
-- **Active management added value** within a disciplined framework, with a Sharpe ratio of 1.60 against 0.67 for the DJIA.
-- **Black–Litterman** gives a structured way to combine market equilibrium with fundamental views.
-- **Constraints and shrinkage** turn a mathematical optimisation into an implementable, diversified allocation.
-- **Downside risk varies sharply across market regimes**, so a single VaR figure understates tail exposure.
-- **Index futures serve two roles:** keeping full benchmark exposure (equitization) or neutralising it (hedging).
+- **The active fund more than doubled the benchmark's risk-adjusted return** (Sharpe 1.60 vs 0.67 for the DJIA) while taking only slightly more volatility and drawdown.
+- **Market beta explains most of the return** ⟶ Size and value exposures are not statistically significant, so the fund is a large-cap tilt around a market core rather than a separate factor bet.
+- **Tail risk depends on the regime:** +41% in a bullish replay against −51% in a bearish one. A single VaR figure therefore understates drawdown risk.
+- **Futures can move exposure either way** ⟶ Long positions restore full benchmark exposure, while a short overlay removes beta at the cost of benchmark returns.
 
 ## 5. Limitations
 
-- Results depend on the Black–Litterman prior and on the analyst views.
-- Correlations are unstable across market regimes.
-- The model makes simplified distributional assumptions.
-- Futures basis risk and roll costs are not fully modelled.
+- Allocations are sensitive to the equilibrium prior and to the analyst views.
+- The optimisation assumes a stable covariance structure, and the Gaussian dependence in the simulation understates tail dependence.
+- Transaction costs, liquidity constraints and futures basis/roll costs are not modelled.
+- Results come from a single evaluation window of about 14 months.
 
 ## Disclaimer
 
-Developed for academic purposes. Nothing in this repository is investment advice. Past and simulated performance does not guarantee future results.
+This is an academic project and nothing in this repository constitutes investment advice.
