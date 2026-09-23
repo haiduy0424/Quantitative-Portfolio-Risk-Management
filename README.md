@@ -1,11 +1,11 @@
 # DJIA Active vs. Passive: A Quantitative Portfolio Study
 
-**Question:** Can a Bayesian, constraint-aware allocation beat a price-weighted index on a risk-adjusted basis, and how closely can that same index be tracked in practice?
+This project builds two USD 50m long-only funds benchmarked against the DJIA and tests whether a quantitative active strategy can beat the index on a risk-adjusted basis.
 
-Two USD 50m long-only DJIA funds, calibrated only on data from Oct 2018 to Sep 2024 and evaluated out-of-sample from 1 Oct 2024 to 20 Nov 2025:
+- **Active fund:** picks and weights DJIA stocks using Black–Litterman model return forecasts and a constrained optimizer.
+- **Passive fund:** replicates the DJIA and uses index futures to manage cash and market exposure.
 
-- Active: Black–Litterman returns + shrinkage covariance → constrained max-Sharpe portfolio
-- Passive: price-weighted full replication + index-futures overlay
+Both funds are built on data up to Sep 2024 and tested on unseen data from Oct 2024 to Nov 2025.
 
 ## 1. Results (out-of-sample)
 
@@ -20,7 +20,7 @@ Two USD 50m long-only DJIA funds, calibrated only on data from Oct 2018 to Sep 2
 
 ## 2. Approach
 
-**Active fund**
+**2.1 Active fund**
 1. **Covariance:** Estimate the risk model with cross-validated shrinkage to reduce estimation noise.
 2. **Expected returns:** Blend market-implied equilibrium returns with analyst views via Black–Litterman model instead of relying on historical averages.
 3. **Optimization:** Maximize the Sharpe ratio under long-only, sector and single-stock limits, keeping the 12 highest-conviction names.
@@ -28,41 +28,29 @@ Two USD 50m long-only DJIA funds, calibrated only on data from Oct 2018 to Sep 2
 5. **Risk:** Measure downside risk with Monte Carlo VaR and stress-test the portfolio across bullish, bearish and stable regimes.
 6. **Attribution:** Decompose returns with a Fama–French factor model to separate market, size and value exposures.
 
-**Passive fund**
-- Price-weighted replication with event-driven reconstitution (Nov 2024: NVDA and SHW replace INTC and DOW).
-- A 5% cash buffer is equitized with long DJIA futures, sized as `N = cash / (index level × multiplier)`.
-- A short-futures overlay is tested as a beta-neutral variant for drawdown control.
+**2.2 Passive fund**
+1. **Replication:** Hold all DJIA constituents at their price-weighted index weights.
+2. **Reconstitution:** Rebalance only when index membership changes, such as the Nov 2024 switch from INTC and DOW to NVDA and SHW.
+3. **Cash equitization:** Use long DJIA futures to put the 5% cash buffer to work and avoid cash drag.
+4. **Beta hedging:** Test a short-futures overlay that neutralizes market exposure to limit drawdowns.
 
-## 3. Limitations
+## 3. Key Findings
 
-- Results come from a single 14-month test window, which is too short to prove skill statistically.
-- Expected returns rely on sell-side target prices, and view confidences are set by heuristic rather than estimated.
-- The Monte Carlo assumes Gaussian dependence, which likely understates joint tail risk.
-- Transaction costs are simplified, and futures basis, roll costs and market impact are not modeled.
+- **Risk-adjusted outperformance:** The active fund more than doubled the DJIA's Sharpe ratio (1.60 vs 0.67) with only about 2 pp higher volatility.
+- **Return drivers:** Factor regression shows market exposure as the only significant driver, with no meaningful size or value bets.
+- **Stock contribution:** GS, JPM, INTC and CSCO contributed most to portfolio return, led by financials and technology.
+- **Hidden tail risk:** A 2008-style stress test implies a loss of about 51% over two years, far beyond the realized drawdown.
+- **Low turnover:** Weights stayed within the ±5% drift band throughout the period, so no rebalancing costs were incurred.
+- **Near-perfect replication:** Futures equitization cut the passive fund's cash-drag tracking error from 0.82% to near zero.
 
 ## 4. Key Learnings
 
-- **Portfolio construction**: Bayesian return estimation and constrained mean-variance optimization.
-- **Risk modeling**: covariance shrinkage, Monte Carlo VaR and scenario stress testing.
-- **Performance attribution**: factor models, risk-adjusted metrics and tracking error.
-- **Research discipline**: out-of-sample testing, avoiding look-ahead bias and separating skill from market exposure.
-- **Implementation**: index replication, rule-based rebalancing and futures overlays.
+- **Portfolio construction:** Applying Bayesian estimation and constrained optimization to build investable portfolios.
+- **Risk modeling:** Measuring and stress-testing portfolio risk with robust covariance and simulation methods.
+- **Performance attribution:** Evaluating returns through factor models and risk-adjusted metrics.
+- **Research discipline:** Designing unbiased out-of-sample backtests and interpreting results critically.
+- **Derivatives & implementation:** Using index futures for cash management and hedging.
+- **Quantitative programming:** Building an end-to-end research pipeline in Python.
 
-## 5. Repository
-
-```
-├── Main.ipynb                           # end-to-end pipeline: data → risk model → BL → optimization → backtest → risk → attribution
-├── utils.py                             # covariance, Black–Litterman, backtesting, VaR, factor models, passive/futures modules
-├── Report.pdf                           # full fund report
-├── target_prices_djia.xlsx              # analyst target prices (BL views)
-└── F-F_Research_Data_Factors_daily.xlsx # Fama–French factors
-```
-
-```bash
-pip install pandas numpy scipy scikit-learn statsmodels PyPortfolioOpt yfinance matplotlib seaborn plotly openpyxl
-jupyter notebook Main.ipynb
-```
-
----
 ## Disclaimer
-*This is an academic team project and not an investment advice.*
+This is an academic team project and not an investment advice.
