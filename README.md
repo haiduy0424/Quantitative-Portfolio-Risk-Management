@@ -1,49 +1,68 @@
-# Active & Passive DJIA Fund Management
+# DJIA Active vs. Passive: A Quantitative Portfolio Study
 
-A quantitative portfolio management project simulating two USD 50m equity funds benchmarked against the DJIA — one actively managed, one passively replicated — covering the full research pipeline from risk modeling to derivatives overlays.
+**Question:** Can a Bayesian, constraint-aware allocation beat a price-weighted index on a risk-adjusted basis, and how closely can that same index be tracked in practice?
 
-## 1. Overview
+Two USD 50m long-only DJIA funds, calibrated only on data from **Oct 2018 to Sep 2024** and evaluated **out-of-sample from 1 Oct 2024 to 20 Nov 2025**:
 
-- Active fund: a constrained, optimization-driven equity portfolio built on Bayesian return forecasting, aiming to outperform the benchmark on a risk-adjusted basis
-- Passive fund: a full index replication strategy enhanced with futures overlays for cash management and risk exposure control
-- Evaluation period: Oct 2024 – Nov 2025, USD 50m initial capital per fund
+- **Active:** Black–Litterman returns + shrinkage covariance → constrained max-Sharpe portfolio
+- **Passive:** price-weighted full replication + index-futures overlay
 
-## 2. Methodology
+## 1. Results (out-of-sample)
 
-**2.1. Portfolio Construction**
-- Bayesian expected-return estimation blending a market-implied equilibrium prior with subjective, analyst-driven views, rather than relying on historical averages alone
-- Constrained mean-variance optimization to maximize risk-adjusted return, subject to sector allocation limits, single-stock concentration caps, and a long-only, fully invested mandate
-- Systematic, rules-based rebalancing triggered by portfolio drift beyond a defined threshold, balancing responsiveness against unnecessary turnover
+| Active fund | Portfolio | DJIA | SPY |
+|---|---|---|---|
+| Total return | **42.1%** | 18.0% | 9.5% |
+| Ann. volatility | 20.9% | 18.9% | 16.5% |
+| Sharpe ratio | **1.60** | 0.67 | 0.32 |
+| Max drawdown | −20.6% | −18.8% | −16.4% |
 
-**2.2. Risk Management**
-- Robust covariance estimation using shrinkage techniques, with shrinkage intensity calibrated via cross-validation to improve out-of-sample stability over raw sample covariance
-- Simulation-based tail-risk analysis (Monte Carlo Value-at-Risk) across multiple confidence levels to capture the range of plausible portfolio outcomes
-- Scenario and stress testing across bullish, bearish and stable market regimes to assess how the portfolio behaves outside of a single historical path
+**Passive fund:** tracking error **0.22%** (target < 5%). Futures cash equitization removed cash-drag tracking error (0.82% → ~0).
 
-**2.3. Performance Attribution**
-- Factor-based return decomposition to separate market, size and value exposures and identify the true drivers of performance
-- Risk-adjusted performance evaluation using standard industry metrics, benchmarked consistently against both the active and passive strategies
-- Tracking error analysis to quantify how closely the passive fund follows its benchmark, and where deviations originate
+## 2. Approach
 
-**2.4. Index Replication & Derivatives**
-- Price-weighted full replication of a benchmark index, including correct handling of index composition changes over the evaluation period
-- Futures overlay strategies for cash equitization, deploying idle cash to minimize performance drag, and for beta hedging, reducing unwanted market exposure
-- Hedge-ratio sizing and contract-level exposure management to align derivatives positions with the fund's risk objectives
+**Active fund**
+1. **Covariance:** Ledoit–Wolf shrinkage, with the shrinkage intensity chosen by cross-validated out-of-sample log-likelihood (train ≤ 2022, test 2023–24) ⟶ Raw sample covariance is unstable for 30 assets over 6 years.
+2. **Expected returns:** Black–Litterman. The prior is market-cap-implied equilibrium returns, updated with absolute views from sell-side target prices and a view-uncertainty matrix Ω built from confidence levels. The goal is to avoid relying on historical means.
+3. **Optimization:** max-Sharpe on the BL posterior. Constraints: long-only, fully invested, sector budgets from a top-down macro view, and a single-name cap. The 12 highest-conviction names are kept.
+4. **Rebalancing:** ±5% drift band with 15 bps transaction costs ⟶ Weights never breached the band, so turnover stayed at zero.
+5. **Risk:** 10,000-path Monte Carlo on the shrunk covariance with KDE-smoothed marginals gives 1-year VaR of 19% (95%) and 24% (99%). Replaying the portfolio in a bear regime (2007–09) loses 51% over two years, so the portfolio is **not** defensive.
+6. **Attribution:** Fama–French 3-factor OLS with HAC errors ⟶ Only the market factor is significant; SMB and HML are not. The excess return comes from a quality large-cap tilt, not from size or value.
 
-## 3. Skills & Competencies Demonstrated
+**Passive fund**
+- Price-weighted replication with event-driven reconstitution (Nov 2024: NVDA and SHW replace INTC and DOW).
+- A 5% cash buffer is equitized with long DJIA futures, sized as `N = cash / (index level × multiplier)`.
+- A short-futures overlay is tested as a beta-neutral variant for drawdown control.
 
-- Quantitative portfolio construction and optimization under real-world constraints
-- Applied Bayesian methods for return forecasting in an asset management context
-- Statistical risk modeling, including shrinkage estimation and Monte Carlo simulation
-- Performance attribution and factor analysis for evaluating fund performance
-- Derivatives-based risk and exposure management
-- End-to-end quantitative research workflow: data acquisition, modeling, optimization, backtesting and reporting
-- Strong applied Python skills for building a full quantitative research pipeline from scratch
+## 3. Limitations
 
-## 4. Tools
+- Results come from a single 14-month test window, which is too short to prove skill statistically.
+- Expected returns rely on sell-side target prices, and view confidences are set by heuristic rather than estimated.
+- The Monte Carlo assumes Gaussian dependence, which likely understates joint tail risk.
+- Transaction costs are simplified, and futures basis, roll costs and market impact are not modeled.
 
-Python (pandas, NumPy, SciPy, scikit-learn, statsmodels, PyPortfolioOpt, yfinance), Jupyter Notebook
+## 4. Key Learnings
 
+- **Portfolio construction**: Bayesian return estimation and constrained mean-variance optimization.
+- **Risk modeling**: covariance shrinkage, Monte Carlo VaR and scenario stress testing.
+- **Performance attribution**: factor models, risk-adjusted metrics and tracking error.
+- **Research discipline**: out-of-sample testing, avoiding look-ahead bias and separating skill from market exposure.
+- **Implementation**: index replication, rule-based rebalancing and futures overlays.
+
+## 5. Repository
+
+```
+├── Main.ipynb                           # end-to-end pipeline: data → risk model → BL → optimization → backtest → risk → attribution
+├── utils.py                             # covariance, Black–Litterman, backtesting, VaR, factor models, passive/futures modules
+├── Report.pdf                           # full fund report
+├── target_prices_djia.xlsx              # analyst target prices (BL views)
+└── F-F_Research_Data_Factors_daily.xlsx # Fama–French factors
+```
+
+```bash
+pip install pandas numpy scipy scikit-learn statsmodels PyPortfolioOpt yfinance matplotlib seaborn plotly openpyxl
+jupyter notebook Main.ipynb
+```
+
+---
 ## Disclaimer
-
-This is an academic project, nothing here constitutes investment advice.
+*This is an cademic team project and not an investment advice.*
