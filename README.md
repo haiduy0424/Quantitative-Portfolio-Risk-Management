@@ -2,10 +2,10 @@
 
 **Question:** Can a Bayesian, constraint-aware allocation beat a price-weighted index on a risk-adjusted basis, and how closely can that same index be tracked in practice?
 
-Two USD 50m long-only DJIA funds, calibrated only on data from **Oct 2018 to Sep 2024** and evaluated **out-of-sample from 1 Oct 2024 to 20 Nov 2025**:
+Two USD 50m long-only DJIA funds, calibrated only on data from Oct 2018 to Sep 2024 and evaluated out-of-sample from 1 Oct 2024 to 20 Nov 2025:
 
-- **Active:** Black–Litterman returns + shrinkage covariance → constrained max-Sharpe portfolio
-- **Passive:** price-weighted full replication + index-futures overlay
+- Active: Black–Litterman returns + shrinkage covariance → constrained max-Sharpe portfolio
+- Passive: price-weighted full replication + index-futures overlay
 
 ## 1. Results (out-of-sample)
 
@@ -14,9 +14,9 @@ Two USD 50m long-only DJIA funds, calibrated only on data from **Oct 2018 to Sep
 | Total return | **42.1%** | 18.0% | 9.5% |
 | Ann. volatility | 20.9% | 18.9% | 16.5% |
 | Sharpe ratio | **1.60** | 0.67 | 0.32 |
-| Max drawdown | −20.6% | −18.8% | −16.4% |
+| Max drawdown | (20.6%) | (18.8%) | (16.4%) |
 
-**Passive fund:** tracking error **0.22%** (target < 5%). Futures cash equitization removed cash-drag tracking error (0.82% → ~0).
+**Passive fund:** tracking error 0.22% (target < 5%). Futures cash equitization removed cash-drag tracking error (0.82% → ~0).
 
 ## 2. Approach
 
