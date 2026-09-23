@@ -21,18 +21,18 @@ Both funds are built on data up to Sep 2024 and tested on unseen data from Oct 2
 ## 2. Approach
 
 **2.1 Active fund**
-1. **Covariance:** Estimate the risk model with cross-validated shrinkage to reduce estimation noise.
-2. **Expected returns:** Blend market-implied equilibrium returns with analyst views via Black–Litterman model instead of relying on historical averages.
-3. **Optimization:** Maximize the Sharpe ratio under long-only, sector and single-stock limits, keeping the 12 highest-conviction names.
-4. **Rebalancing:** Rebalance only when a holding drifts more than 5% from its target, net of transaction costs.
-5. **Risk:** Measure downside risk with Monte Carlo VaR and stress-test the portfolio across bullish, bearish and stable regimes.
-6. **Attribution:** Decompose returns with a Fama–French factor model to separate market, size and value exposures.
+- **Covariance:** Estimate the risk model with cross-validated shrinkage to reduce estimation noise.
+- **Expected returns:** Blend market-implied equilibrium returns with analyst views via Black–Litterman model instead of relying on historical averages.
+- **Optimization:** Maximize the Sharpe ratio under long-only, sector and single-stock limits, keeping the 12 highest-conviction names.
+- **Rebalancing:** Rebalance only when a holding drifts more than 5% from its target, net of transaction costs.
+- **Risk:** Measure downside risk with Monte Carlo VaR and stress-test the portfolio across bullish, bearish and stable regimes.
+- **Attribution:** Decompose returns with a Fama–French factor model to separate market, size and value exposures.
 
 **2.2 Passive fund**
-1. **Replication:** Hold all DJIA constituents at their price-weighted index weights.
-2. **Reconstitution:** Rebalance only when index membership changes, such as the Nov 2024 switch from INTC and DOW to NVDA and SHW.
-3. **Cash equitization:** Use long DJIA futures to put the 5% cash buffer to work and avoid cash drag.
-4. **Beta hedging:** Test a short-futures overlay that neutralizes market exposure to limit drawdowns.
+- **Replication:** Hold all DJIA constituents at their price-weighted index weights.
+- **Reconstitution:** Rebalance only when index membership changes, such as the Nov 2024 switch from INTC and DOW to NVDA and SHW.
+- **Cash equitization:** Use long DJIA futures to put the 5% cash buffer to work and avoid cash drag.
+- **Beta hedging:** Test a short-futures overlay that neutralizes market exposure to limit drawdowns.
 
 ## 3. Key Findings
 
