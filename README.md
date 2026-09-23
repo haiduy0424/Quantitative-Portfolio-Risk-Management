@@ -21,12 +21,12 @@ Two USD 50m long-only DJIA funds, calibrated only on data from Oct 2018 to Sep 2
 ## 2. Approach
 
 **Active fund**
-1. **Covariance:** Ledoit–Wolf shrinkage, with the shrinkage intensity chosen by cross-validated out-of-sample log-likelihood (train ≤ 2022, test 2023–24) ⟶ Raw sample covariance is unstable for 30 assets over 6 years.
-2. **Expected returns:** Black–Litterman. The prior is market-cap-implied equilibrium returns, updated with absolute views from sell-side target prices and a view-uncertainty matrix Ω built from confidence levels. The goal is to avoid relying on historical means.
-3. **Optimization:** max-Sharpe on the BL posterior. Constraints: long-only, fully invested, sector budgets from a top-down macro view, and a single-name cap. The 12 highest-conviction names are kept.
-4. **Rebalancing:** ±5% drift band with 15 bps transaction costs ⟶ Weights never breached the band, so turnover stayed at zero.
-5. **Risk:** 10,000-path Monte Carlo on the shrunk covariance with KDE-smoothed marginals gives 1-year VaR of 19% (95%) and 24% (99%). Replaying the portfolio in a bear regime (2007–09) loses 51% over two years, so the portfolio is **not** defensive.
-6. **Attribution:** Fama–French 3-factor OLS with HAC errors ⟶ Only the market factor is significant; SMB and HML are not. The excess return comes from a quality large-cap tilt, not from size or value.
+1. **Covariance:** Estimate the risk model with cross-validated shrinkage to reduce estimation noise.
+2. **Expected returns:** Blend market-implied equilibrium returns with analyst views via Black–Litterman model instead of relying on historical averages.
+3. **Optimization:** Maximize the Sharpe ratio under long-only, sector and single-stock limits, keeping the 12 highest-conviction names.
+4. **Rebalancing:** Rebalance only when a holding drifts more than 5% from its target, net of transaction costs.
+5. **Risk:** Measure downside risk with Monte Carlo VaR and stress-test the portfolio across bullish, bearish and stable regimes.
+6. **Attribution:** Decompose returns with a Fama–French factor model to separate market, size and value exposures.
 
 **Passive fund**
 - Price-weighted replication with event-driven reconstitution (Nov 2024: NVDA and SHW replace INTC and DOW).
@@ -65,4 +65,4 @@ jupyter notebook Main.ipynb
 
 ---
 ## Disclaimer
-*This is an cademic team project and not an investment advice.*
+*This is an academic team project and not an investment advice.*
