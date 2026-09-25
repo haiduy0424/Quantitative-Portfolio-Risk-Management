@@ -7,7 +7,7 @@ An end-to-end portfolio research pipeline in Python that builds two long-only fu
 
 All models are estimated on an in-sample window and evaluated on a separate, unseen out-of-sample period to avoid look-ahead bias.
 
-## Scope
+## 1. Scope
 
 | Area | What the project covers |
 |---|---|
@@ -21,7 +21,7 @@ All models are estimated on an in-sample window and evaluated on a separate, uns
 | **Index replication** | Price-weighted replication of the DJIA, reconstitution handling, tracking-error measurement |
 | **Derivatives overlay** | Futures-based cash equitization to remove cash drag, and a short-futures beta hedge to control market exposure |
 
-## Technical Skills
+## 2. Technical Skills
 
 - **Statistical estimation:** covariance shrinkage, cross-validation, Bayesian updating of expected returns
 - **Optimization:** constrained mean–variance and Sharpe-ratio optimization
@@ -31,16 +31,16 @@ All models are estimated on an in-sample window and evaluated on a separate, uns
 - **Derivatives:** index futures for equitization and hedging
 - **Engineering:** modular, reusable Python backend (data loading, estimators, optimizers, backtester, analytics) driven from a single research notebook
 
-## Tech Stack
+## 3. Tech Stack
 
 Python · NumPy · pandas · SciPy · scikit-learn · statsmodels · PyPortfolioOpt · Matplotlib · Seaborn · Plotly · yfinance
 
-## My Role
+## 4. My Role
 
 - Co-first author in a five-person team, with equal contribution to the research and report.
 - Led the quantitative modeling and built the Python pipeline, from covariance estimation and Black–Litterman optimization to backtesting and risk analysis.
 
-## Repository Structure
+## 5. Repository Structure
 
 ```
 ├── Main.ipynb                           # Research notebook: full pipeline from data to evaluation
