@@ -1,6 +1,6 @@
 # DJIA Active vs. Passive: A Quantitative Portfolio Study
 
-An end-to-end portfolio research pipeline in Python that builds two long-only funds benchmarked against the Dow Jones Industrial Average (DJIA):
+This project represents an end-to-end portfolio research pipeline in Python that builds 2 long-only funds benchmarked against the Dow Jones Industrial Average (DJIA):
 
 - **Active fund:** a quantitative stock-selection and allocation strategy built on a Bayesian return model and constrained optimization.
 - **Passive fund:** a full index-replication fund that uses index futures for cash management and hedging.
