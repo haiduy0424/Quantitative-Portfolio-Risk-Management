@@ -1,4 +1,4 @@
-# DJIA Active vs. Passive: A Quantitative Portfolio Study
+# Active and Passive Equity Management on the DJIA: A Systematic Quantitative Approach
 
 This project represents an end-to-end portfolio research pipeline in Python that builds 2 long-only funds benchmarked against the Dow Jones Industrial Average (DJIA):
 
@@ -33,12 +33,12 @@ All models are estimated on an in-sample window and evaluated on a separate, uns
 
 ## 3. Tech Stack
 
-Python · NumPy · pandas · SciPy · scikit-learn · statsmodels · PyPortfolioOpt · Matplotlib · Seaborn · Plotly · yfinance
+'Python' · 'NumPy' · 'pandas' · 'SciPy' · 'scikit-learn' · 'statsmodels' · 'PyPortfolioOpt' · 'Matplotlib' · 'Seaborn' · 'Plotly' · 'yfinance'
 
 ## 4. My Role
 
-- Co-first author in a five-person team, with equal contribution to the research and report.
-- Led the quantitative modeling and built the Python pipeline, from covariance estimation and Black–Litterman optimization to backtesting and risk analysis.
+- Co-first author in a five-member team, contributing equally to the research and report.
+- Led the quantitative modeling and built the end-to-end Python pipeline, from risk modeling and optimization to backtesting.
 
 ## 5. Repository Structure
 
