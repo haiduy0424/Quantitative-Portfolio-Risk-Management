@@ -33,7 +33,7 @@ All models are estimated on an in-sample window and evaluated on a separate, uns
 
 ## 3. Tech Stack
 
-'Python' · 'NumPy' · 'pandas' · 'SciPy' · 'scikit-learn' · 'statsmodels' · 'PyPortfolioOpt' · 'Matplotlib' · 'Seaborn' · 'Plotly' · 'yfinance'
+`Python` · `NumPy` · `pandas` · `SciPy` · `scikit-learn` · `statsmodels` · `PyPortfolioOpt` · `Matplotlib` · `Seaborn` · `Plotly` · `yfinance`
 
 ## 4. My Role
 
