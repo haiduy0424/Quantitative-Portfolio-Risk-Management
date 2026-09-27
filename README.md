@@ -52,4 +52,4 @@ Python · NumPy · pandas · SciPy · scikit-learn · statsmodels · PyPortfolio
 
 ## Disclaimer
 
-This project is intended for educational purpose only and does not constitute investment advice.
+This project is intended for educational purposes only and does not constitute investment advice.
