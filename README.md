@@ -21,7 +21,7 @@ All models are estimated on an in-sample window and evaluated on a separate, uns
 | **Index replication** | Price-weighted replication of the DJIA, reconstitution handling, tracking-error measurement |
 | **Derivatives overlay** | Futures-based cash equitization to remove cash drag, and a short-futures beta hedge to control market exposure |
 
-## 2. Technical Skills
+## 2. Technical Skills Demonstrated
 
 - **Statistical estimation:** covariance shrinkage, cross-validation, Bayesian updating of expected returns
 - **Optimization:** constrained mean–variance and Sharpe-ratio optimization
@@ -52,4 +52,4 @@ Python · NumPy · pandas · SciPy · scikit-learn · statsmodels · PyPortfolio
 
 ## Disclaimer
 
-This project was completed as part of an academic team assignment and does not constitute investment advice.
+This project is intended for educational purpose only and does not constitute investment advice.
