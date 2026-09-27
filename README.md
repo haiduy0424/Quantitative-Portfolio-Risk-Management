@@ -23,13 +23,13 @@ All models are estimated on an in-sample window and evaluated on a separate, uns
 
 ## 2. Technical Skills Demonstrated
 
-- **Statistical estimation:** covariance shrinkage, cross-validation, Bayesian updating of expected returns
-- **Optimization:** constrained mean–variance and Sharpe-ratio optimization
-- **Risk modeling:** simulation-based VaR, tail-risk measures, regime-based stress testing
-- **Factor modeling:** OLS factor regressions for return and risk attribution
-- **Backtesting:** out-of-sample evaluation, rebalancing rules, transaction-cost modeling, risk-adjusted performance metrics
-- **Derivatives:** index futures for equitization and hedging
-- **Engineering:** modular, reusable Python backend (data loading, estimators, optimizers, backtester, analytics) driven from a single research notebook
+- **Statistical estimation:** covariance shrinkage, cross-validation, Bayesian updating of expected returns.
+- **Optimization:** constrained mean–variance and Sharpe-ratio optimization.
+- **Risk modeling:** simulation-based VaR, tail-risk measures, regime-based stress testing.
+- **Factor modeling:** OLS factor regressions for return and risk attribution.
+- **Backtesting:** out-of-sample evaluation, rebalancing rules, transaction-cost modeling, risk-adjusted performance metrics.
+- **Derivatives:** index futures for equitization and hedging.
+- **Engineering:** modular, reusable Python backend (data loading, estimators, optimizers, backtester, analytics) driven from a single research notebook.
 
 ## 3. Tech Stack
 
