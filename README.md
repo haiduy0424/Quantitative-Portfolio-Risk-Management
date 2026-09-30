@@ -55,21 +55,20 @@ Predict and evaluate portfolio risk and performance using statistical and econom
 
 ### 5.1. Active Fund Performance
 
-* The Active Fund significantly outperformed both the DJIA benchmark and S&P 500 in total and risk-adjusted returns over the evaluation period.
-* Zero rebalancing events were triggered — initial weights remained within the ±5% drift band throughout, reflecting a stable and well-diversified initial allocation.
-* Fama–French regression confirms a quality large-cap tilt with dominant market-risk loading and limited size/value exposure.
+* The Active Fund outperformed the DJIA with a Sharpe ratio of 1.60 versus 0.67, showing that Black–Litterman optimization added meaningful risk-adjusted value.
+* No rebalancing was triggered during the backtest, which confirms that the initial allocation was stable and kept turnover costs minimal.
+* Fama–French attribution shows that returns were driven mainly by market beta rather than size or value premia, reflecting a quality large-cap profile.
 
-### 5.2. Scenario & Downside Analysis
+### 5.2. Risk Profile and Regime Sensitivity
 
-* Under a bullish regime, the Active Fund delivers strong gains, broadly in line with the passive strategy.
-* Under a bearish regime, the concentrated active tilts amplify drawdowns significantly, highlighting the asymmetric downside risk of active management.
-* These results underscore the importance of regime awareness in risk budgeting and position sizing.
+* The Active Fund achieved its outperformance with only marginally higher volatility and drawdown than the DJIA.
+* Scenario tests reveal that concentrated active tilts amplify losses in bearish markets, making regime-aware risk budgeting essential.
 
-### 5.3. Passive Fund & Derivatives Overlay
+### 5.3. Passive Fund and Derivatives Overlay
 
-* The Passive Fund closely tracks the DJIA with a tracking error well within the 5% target.
-* Cash equitization via DJIA E-mini futures contracts effectively eliminates cash drag, reducing tracking error to near zero.
-* The short-futures beta overlay compresses volatility but introduces benchmark divergence — illustrating the trade-off between capital preservation and index replication.
+* The Passive Fund replicated the DJIA with a tracking error well within the 5% tolerance.
+* Cash equitization with DJIA futures eliminated cash drag and reduced tracking error to near zero.
+* The short-futures overlay neutralized market beta and reduced volatility, but it caused returns to diverge from the benchmark.
 
 ## 6. Disclaimer
 
