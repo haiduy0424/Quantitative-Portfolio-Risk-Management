@@ -26,7 +26,7 @@ Predict and evaluate portfolio risk and performance using statistical and econom
 
 ### 4.1. Data Collection
 
-* Daily DJIA constituent prices retrieved via Yahoo Finance.
+* Daily DJIA constituent prices retrieved via Yahoo Finance or equivalent APIs.
 * Fama–French daily factors sourced from WRDS.
 * Analyst target prices collected from JPMorgan, Barclays, and Wells Fargo research.
 
